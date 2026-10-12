@@ -54,8 +54,9 @@ jobs:
           git clone --recursive https://github.com/rexglue/rexglue-sdk.git
           cd rexglue-sdk
           cmake --preset linux-amd64 \
-            -DCMAKE_INSTALL_PREFIX="$HOME/.local"
-          cmake --build out/build/linux-amd64 --target install -j2
+            -DCMAKE_INSTALL_PREFIX="$HOME/.local" \
+            -DSDL_X11_XSCRNSAVER=OFF
+
 
       - name: Configure UFC3
         run: |
