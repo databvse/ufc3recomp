@@ -47,3 +47,24 @@ jobs:
             exit 1
           fi
           "$REXGLUE" codegen ufc3_manifest.toml --force
+
+          
+      - name: Inspect generated code
+        if: success()
+        run: |
+          echo "Generated directory:"
+          ls -lah generated || true
+          echo "Generated file count:"
+          find generated -type f | wc -l
+          echo "Generated size:"
+          du -sh generated || true
+
+      - name: Save generated code
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ufc3-generated-code
+          path: generated/
+          if-no-files-found: warn
+          retention-days: 3
+
