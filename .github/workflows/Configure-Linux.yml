@@ -12,19 +12,18 @@ jobs:
       - name: Checkout project
         uses: actions/checkout@v4
 
-      - name: Install dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y cmake ninja-build clang-20 libgtk-3-dev
-
       - name: Check generated files
         run: |
-          test -f generated/rexglue.cmake
-          echo "ReXGlue CMake file found"
-          ls -lah generated
+          echo "Checking ReXGlue CMake file..."
+          if [ -f generated/rexglue.cmake ]; then
+            echo "ReXGlue CMake file found"
+          else
+            echo "ReXGlue CMake file missing"
+            exit 1
+          fi
 
-      - name: Check compiler
+      - name: Check existing tools
         run: |
-          clang-20 --version
           cmake --version
           ninja --version
+          clang++ --version
