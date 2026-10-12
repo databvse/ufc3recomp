@@ -39,6 +39,11 @@ jobs:
           ninja --version
           clang++ --version
 
+      - name: Install Clang 20
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y clang-20
+
       - name: Configure UFC3
         run: |
           cmake --preset linux-amd64-relwithdebinfo
