@@ -48,6 +48,19 @@ jobs:
           fi
           "$REXGLUE" codegen ufc3_manifest.toml --force
 
+      
+      - name: Locate ReXGlue CMake file
+        if: success()
+        run: |
+          echo "Searching for rexglue.cmake..."
+          find . -type f -name "rexglue.cmake" -print
+          if [ -f generated/rexglue.cmake ]; then
+            echo "Expected CMake file found."
+          else
+            echo "Expected path is missing."
+          fi
+
+
           
       - name: Inspect generated code
         if: success()
