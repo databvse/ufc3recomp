@@ -1,0 +1,33 @@
+
+name: UFC3 build environment check
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-check:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v4
+
+      - name: Install build tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake ninja-build clang git
+
+      - name: Check tools
+        run: |
+          cmake --version
+          ninja --version
+          clang --version
+
+      - name: Check project files
+        run: |
+          test -f CMakeLists.txt
+          test -f CMakePresets.json
+          test -f ufc3_manifest.toml
+          echo "Project files found."
