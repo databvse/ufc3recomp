@@ -39,3 +39,8 @@ jobs:
           ninja --version
           clang++ --version
 
+      - name: Configure UFC3
+        run: |
+          cmake --preset linux-amd64-relwithdebinfo
+
+
