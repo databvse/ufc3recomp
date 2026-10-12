@@ -4,6 +4,10 @@ name: UFC3 Linux configure test
 on:
   workflow_dispatch:
 
+permissions:
+  actions: read
+  contents: read
+
 jobs:
   configure:
     runs-on: ubuntu-24.04
@@ -19,14 +23,15 @@ jobs:
           path: generated/
           github-token: ${{ secrets.GITHUB_TOKEN }}
           repository: ${{ github.repository }}
-          run-id: ${{ github.run_id }}
+          run-id: 38286640054
 
       - name: Check generated files
         run: |
           echo "Checking ReXGlue CMake file..."
           test -f generated/rexglue.cmake
           echo "ReXGlue CMake file found"
-          find generated -maxdepth 2 -type f | head -30
+          echo "Generated file count:"
+          find generated -type f | wc -l
 
       - name: Check existing tools
         run: |
