@@ -44,8 +44,22 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y clang-20
 
+      - name: Install SDK dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgtk-3-dev
+
+      - name: Build and install ReXGlue SDK
+        run: |
+          git clone --recursive https://github.com/rexglue/rexglue-sdk.git
+          cd rexglue-sdk
+          cmake --preset linux-amd64 \
+            -DCMAKE_INSTALL_PREFIX="$HOME/.local"
+          cmake --build out/build/linux-amd64 --target install -j2
+
       - name: Configure UFC3
         run: |
-          cmake --preset linux-amd64-relwithdebinfo
+          cmake --preset linux-amd64-relwithdebinfo \
+            -DCMAKE_PREFIX_PATH="$HOME/.local"
 
 
