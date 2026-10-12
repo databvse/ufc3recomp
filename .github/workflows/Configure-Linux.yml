@@ -62,6 +62,8 @@ jobs:
       - name: Configure UFC3
         run: |
           cmake --preset linux-amd64-relwithdebinfo \
+            -DREXSDK_DIR="$GITHUB_WORKSPACE/rexglue-sdk" \
             -DCMAKE_PREFIX_PATH="$HOME/.local"
+
 
 
