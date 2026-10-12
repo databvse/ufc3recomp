@@ -1,0 +1,49 @@
+
+name: UFC3 ReXGlue code generation
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  codegen:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 60
+
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v4
+
+      - name: Checkout private game assets
+        uses: actions/checkout@v4
+        with:
+          repository: databvse/ufc3-private-assets
+          token: ${{ secrets.ASSETS_TOKEN }}
+          path: private-assets
+
+      - name: Prepare game file
+        run: |
+          mkdir -p assets/game
+          cp private-assets/default.xex assets/game/default.xex
+          test -f assets/game/default.xex
+          echo "Game file prepared."
+
+      - name: Download ReXGlue SDK
+        run: |
+          curl -fL \
+            https://github.com/rexglue/rexglue-sdk/releases/download/v0.10.0/rexglue-sdk-0.10.0-linux-amd64.zip \
+            -o /tmp/rexglue.zip
+          mkdir -p /tmp/rexglue
+          unzip -q /tmp/rexglue.zip -d /tmp/rexglue
+          find /tmp/rexglue -type f -name rexglue -print
+
+      - name: Run code generation
+        run: |
+          REXGLUE="$(find /tmp/rexglue -type f -name rexglue -perm /111 | head -n 1)"
+          if [ -z "$REXGLUE" ]; then
+            echo "Could not locate the ReXGlue executable."
+            exit 1
+          fi
+          "$REXGLUE" codegen ufc3_manifest.toml --force
