@@ -16,6 +16,21 @@ jobs:
       - name: Checkout project
         uses: actions/checkout@v4
 
+        
+      - name: Checkout private game assets
+        uses: actions/checkout@v4
+        with:
+          repository: databvse/ufc3-private-assets
+          token: ${{ secrets.ASSETS_TOKEN }}
+          path: private-assets
+
+      - name: Restore original XEX
+        run: |
+          mkdir -p assets/game
+          cp private-assets/default.xex assets/game/default.xex
+          ls -lh assets/game/default.xex
+
+
       - name: Download generated code
         uses: actions/download-artifact@v4
         with:
