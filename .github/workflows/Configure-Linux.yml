@@ -80,6 +80,14 @@ jobs:
             -DCMAKE_PREFIX_PATH="$HOME/.local" \
             -DSDL_X11_XSCRNSAVER=OFF
 
+
+      - name: Inspect missing headers
+        run: |
+          echo "Searching for imgui.h..."
+          find rexglue-sdk -name imgui.h -print
+          echo "Searching for native_guest_renderer.h..."
+          find rexglue-sdk -name native_guest_renderer.h -print
+
       - name: Build UFC3
         run: |
           cmake --build out/build/linux-amd64-relwithdebinfo --target ufc3 -j2
