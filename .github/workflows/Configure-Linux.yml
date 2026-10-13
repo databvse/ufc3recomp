@@ -57,13 +57,14 @@ jobs:
           cmake --preset linux-amd64 \
             -DCMAKE_INSTALL_PREFIX="$HOME/.local" \
             -DSDL_X11_XSCRNSAVER=OFF
-
-
+ 
       - name: Configure UFC3
         run: |
           cmake --preset linux-amd64-relwithdebinfo \
             -DREXSDK_DIR="$GITHUB_WORKSPACE/rexglue-sdk" \
-            -DCMAKE_PREFIX_PATH="$HOME/.local"
+            -DCMAKE_PREFIX_PATH="$HOME/.local" \
+            -DSDL_X11_XSCRNSAVER=OFF
+
 
 
 
