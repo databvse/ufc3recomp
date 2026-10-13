@@ -65,6 +65,10 @@ jobs:
             -DCMAKE_PREFIX_PATH="$HOME/.local" \
             -DSDL_X11_XSCRNSAVER=OFF
 
+      - name: Build UFC3
+        run: |
+          cmake --build out/build/linux-amd64-relwithdebinfo --target ufc3 -j2
+
 
 
 
